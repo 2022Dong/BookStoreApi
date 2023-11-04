@@ -16,9 +16,13 @@ public class BooksController : ControllerBase
     public BooksController(BooksService booksService) =>
         _booksService = booksService;
 
-    [HttpGet]
-    public async Task<List<Book>> Get() =>
-        await _booksService.GetAsync();
+    [HttpGet("stores")] // Define a unique route for getting stores
+    public async Task<List<Store>> GetAllStores() =>
+        await _booksService.GetStoresAsync();
+
+    [HttpGet("books")] // Define a unique route for getting books
+    public async Task<List<Book>> GetAllBooks() =>
+    await _booksService.GetAsync();
 
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<Book>> Get(string id)

@@ -6,7 +6,9 @@ namespace BookStoreApi.Services
 {
     public class BooksService
     {
+        private readonly IMongoCollection<Store> _storesCollection;
         private readonly IMongoCollection<Book> _booksCollection;
+        
 
         public BooksService(
             IOptions<BookStoreDatabaseSettings> bookStoreDatabaseSettings)
@@ -19,7 +21,12 @@ namespace BookStoreApi.Services
 
             _booksCollection = mongoDatabase.GetCollection<Book>(
                 bookStoreDatabaseSettings.Value.BooksCollectionName);
+
+            _storesCollection = mongoDatabase.GetCollection<Store>(
+                bookStoreDatabaseSettings.Value.StoresCollectionName);
         }
+        public async Task<List<Store>> GetStoresAsync() =>
+            await _storesCollection.Find(_ => true).ToListAsync();
 
         public async Task<List<Book>> GetAsync() =>
             await _booksCollection.Find(_ => true).ToListAsync();

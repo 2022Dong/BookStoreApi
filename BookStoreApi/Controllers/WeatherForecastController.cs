@@ -1,3 +1,4 @@
+using BookStoreApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreApi.Controllers
