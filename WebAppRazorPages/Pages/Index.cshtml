@@ -1,0 +1,39 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@* add the following code. -- I copy from 8.3 project.*@
+<ul id="books-list"></ul>
+
+@section Scripts {
+    <script>
+        let url = "https://localhost:7180/api/Books/books";
+        let booksList = document.getElementById("books-list");
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => showProducts(data))
+            .catch(ex => {
+                alert("Error!");
+                console.error(ex);
+            });
+
+        function showProducts(books) {
+            books.forEach(book => {
+                let li = document.createElement("li");
+                let text = `${book.bookName} (\$${book.price})`;  // attributes ~ camalCase
+                li.appendChild(
+                    document.createTextNode(text));
+                booksList.appendChild(li);
+            });
+        }
+
+    </script>
+}
